@@ -35,8 +35,16 @@ ALLOWED_HOSTS = [
                  'amtimes.pythonanywhere.com'
                  ]
 
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
+CSRF_COOKIE_DOMAIN = '.amtimes.pythonanywhere.com'
+CSRF_TRUSTED_ORIGINS = ['http://amtimes.pythonanywhere.com', 'https://amtimes.pythonanywhere.com',]
+ALLOWED_ORIGINS = CSRF_TRUSTED_ORIGINS.copy()
 
 # Application definition
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -102,11 +110,11 @@ DATABASES = {
         'PASSWORD': os.getenv('MYSQL_PASSWORD'),
         'HOST': 'amtimes.mysql.pythonanywhere-services.com',
         'OPTIONS': {
-                'init_command': "SET NAMES 'utf8mb4';SETsql_mode='STRICT_TRANS_TABLES'",
-                'charset': 'utf8mb4',
-                },
-        }
+            'init_command': "SET NAMES 'utf8mb4';SET sql_mode='STRICT_TRANS_TABLES'",
+            'charset': 'utf8mb4',
+        },
     }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
