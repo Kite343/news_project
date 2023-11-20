@@ -21,14 +21,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^ob$x8y&khu)01)zf(fv^#a65nh+f#m0)bimw9xa7&&_3gg+36'
+# SECRET_KEY = 'django-insecure-^ob$x8y&khu)01)zf(fv^#a65nh+f#m0)bimw9xa7&&_3gg+36'
+SECRET_KEY = os.getenv('SECRET_KEY')
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = False
+# DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['192.168.0.167',
-                 '127.0.0.1',
+ALLOWED_HOSTS = [
+                 'amtimes.pythonanywhere.com'
                  ]
 
 
@@ -83,13 +87,26 @@ WSGI_APPLICATION = 'city_newsproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'amtimes$default',
+        'USER': 'amtimes',
+        'PASSWORD': os.getenv('MYSQL_PASSWORD'),
+        'HOST': 'amtimes.mysql.pythonanywhere-services.com',
+        'OPTIONS': {
+                'init_command': "SET NAMES 'utf8mb4';SETsql_mode='STRICT_TRANS_TABLES'",
+                'charset': 'utf8mb4',
+                },
+        }
     }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
